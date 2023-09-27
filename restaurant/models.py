@@ -36,4 +36,4 @@ class Vote(models.Model):
         ordering = ["-vote_date"]
 
     def __str__(self):
-        return f"Vote from {self.user.full_name} for {self.menu.restaurant.name}| DATE: {self.vote_date}"
+        return f"Vote from {self.user.full_name} for {self.menu.restaurant.name} | DATE: {self.vote_date}"
