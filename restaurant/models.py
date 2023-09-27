@@ -5,6 +5,7 @@ from config import settings
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False, unique=True)
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
