@@ -17,7 +17,6 @@ class RestaurantViewSet(viewsets.ModelViewSet):
     serializer_class = RestaurantSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly, )
 
-    # TODO: uncomment to use slugs for detail pages
     # lookup_field = "slug"
 
     def get_serializer_class(self):
@@ -38,7 +37,6 @@ class MenuViewSet(viewsets.ModelViewSet):
     serializer_class = MenuSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly, )
 
-    # TODO: uncomment to use slugs for detail pages
     # lookup_field = "slug"
 
     def get_serializer_class(self):
@@ -73,6 +71,8 @@ class VoteViewSet(viewsets.ModelViewSet):
     queryset = Vote.objects.select_related("user", "menu", "menu__restaurant")
     serializer_class = VoteSerializer
     permission_classes = [IsAuthenticated, ]
+
+    # lookup_field = "slug"
 
     def get_queryset(self):
         user = self.request.user
