@@ -1,6 +1,6 @@
 from rest_framework import routers
 
-from restaurant.views import RestaurantViewSet, MenuViewSet, VoteViewSet
+from restaurant.views import MenuViewSet, RestaurantViewSet, VoteViewSet
 
 router = routers.DefaultRouter()
 router.register("restaurants", RestaurantViewSet)

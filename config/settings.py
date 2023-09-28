@@ -146,7 +146,11 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {"anon": "100/day", "user": "1000/day"},
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+    # "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.HeaderVersioning",
+    # "DEFAULT_VERSION": "1.0",  # Default version in case the client doesn't send any
+    # "ALLOWED_VERSIONS": ["1.0", "2.0"],  # The versions API currently supports
+    # "VERSION_PARAM": "version",  # This is the default value, used in the Accept header
 }
 
 SPECTACULAR_SETTINGS = {

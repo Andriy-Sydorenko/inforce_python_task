@@ -1,14 +1,17 @@
 import datetime
 
 from django.db import models
-from django.dispatch import receiver
 from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.utils.text import slugify
+
 from config import settings
 
 
 class Restaurant(models.Model):
-    name = models.CharField(max_length=255, null=False, blank=False, unique=True)
+    name = models.CharField(max_length=255,
+                            null=False, blank=False,
+                            unique=True)
     description = models.TextField(null=True, blank=True)
     slug = models.SlugField(max_length=255, blank=True)
 
@@ -25,7 +28,9 @@ class Restaurant(models.Model):
 
 
 class Menu(models.Model):
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="menus")
+    restaurant = models.ForeignKey(Restaurant,
+                                   on_delete=models.CASCADE,
+                                   related_name="menus")
     post_date = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)
     menu_items = models.TextField()
@@ -45,8 +50,11 @@ class Menu(models.Model):
 
 
 class Vote(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="votes")
-    menu = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="votes")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE,
+                             related_name="votes")
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE,
+                             related_name="votes")
     vote_date = models.DateField(auto_now_add=True)
     slug = models.SlugField(max_length=255, blank=True)
 
@@ -54,7 +62,8 @@ class Vote(models.Model):
         ordering = ["-vote_date"]
 
     def generate_slug(self):
-        slug_base = f"user-{self.user.email.split('@')[0]}-vote-{datetime.datetime.now()}"
+        slug_base = (f"user-{self.user.email.split('@')[0]}"
+                     f"-vote-{datetime.datetime.now()}")
         return slugify(slug_base)
 
     def save(self, *args, **kwargs):
@@ -63,4 +72,5 @@ class Vote(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Vote from {self.user.full_name} for {self.menu.restaurant.name} | DATE: {self.vote_date}"
+        return (f"Vote from {self.user.full_name} for "
+                f"{self.menu.restaurant.name} | DATE: {self.vote_date}")
